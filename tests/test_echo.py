@@ -11,14 +11,13 @@ import argparse
 import importlib
 import sys
 
-# devs: change this to 'soln.echo' to run this suite against the solution
-PKG_NAME = 'echo'
+# change this to 'soln.echo' to run this suite against the solution
+PKG_NAME = "echo"
 
 # suppress __pycache__ and .pyc files
 sys.dont_write_bytecode = True
 
 
-# Students should use this function in their tests
 def run_capture(pyfile, args=()):
     """
     Runs a python program in a separate process,
@@ -28,10 +27,7 @@ def run_capture(pyfile, args=()):
     cmd.extend(args)
     try:
         result = subprocess.run(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            check=True
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True
         )
         output = result.stdout.decode()
     except subprocess.CalledProcessError as err:
@@ -40,9 +36,9 @@ def run_capture(pyfile, args=()):
     return output.splitlines()
 
 
-# Students: complete this TestEcho class so that all tests run and pass.
 class TestEcho(unittest.TestCase):
     """Main test fixture for 'echo' module"""
+
     @classmethod
     def setUpClass(cls):
         """Performs module import and suite setup at test-runtime"""
@@ -55,15 +51,19 @@ class TestEcho(unittest.TestCase):
         """Check if create_parser() returns a parser object"""
         result = self.module.create_parser()
         self.assertIsInstance(
-            result, argparse.ArgumentParser,
-            "create_parser() function is not returning a parser object")
+            result,
+            argparse.ArgumentParser,
+            "create_parser() function is not returning a parser object",
+        )
 
     def test_parser_namespace(self):
         """Checks parser_namespace function"""
         parser_namespace = self.module.create_parser()
         self.assertIsInstance(
-            parser_namespace, argparse.ArgumentParser,
-            "create_parser() function is not returning a parser object")
+            parser_namespace,
+            argparse.ArgumentParser,
+            "create_parser() function is not returning a parser object",
+        )
 
     def test_echo(self):
         """Check if main() function prints anything at all"""
@@ -72,11 +72,10 @@ class TestEcho(unittest.TestCase):
 
     def test_simple_echo(self):
         """Check if main actually echoes an input string"""
-        args = ['Was soll die ganze Aufregung?']
+        args = ["Was soll die ganze Aufregung?"]
         output = run_capture(self.module.__file__, args)
         self.assertEqual(
-            output[0], args[0],
-            "The program is not performing simple echo"
+            output[0], args[0], "The program is not performing simple echo"
         )
 
     def test_lower_short(self):
@@ -119,21 +118,21 @@ class TestEcho(unittest.TestCase):
         args = ["-h"]
         output = run_capture(self.module.__file__, args)
         self.assertEqual(
-            output[0], "usage: transforms input text [-h] [-l] [-u] [-t] text")  # noqa
+            output[0], "usage: transforms input text [-h] [-l] [-u] [-t] text"
+        )  # noqa
 
     def test_flake8(self):
         """Checking for PEP8/flake8 compliance"""
-        result = subprocess.run(['flake8', self.module.__file__])
+        result = subprocess.run(["flake8", self.module.__file__])
         self.assertEqual(result.returncode, 0)
 
     def test_author(self):
         """Checking for author string"""
         self.assertIsNotNone(self.module.__author__)
         self.assertNotEqual(
-            self.module.__author__, "???",
-            "Author string is not completed"
+            self.module.__author__, "???", "Author string is not completed"
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
