@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Implements a test fixture for the echo.py module
 
-Students MUST EDIT this module, to add more tests to run
-against the 'echo.py' program.
 """
 __author__ = "Karen Thomas"
 
